@@ -147,7 +147,7 @@ function run_builds {
   options+="-j ${ncpus}"
 
   for build in "${builds[@]}"; do
-    "${nuttx}"/tools/testbuild.sh ${options} -e "-Wno-cpp -Werror" "${build}"
+    "${nuttx}"/../nuttx-patched/tools/testbuild.sh ${options} -e "-Wno-cpp -Werror" "${build}"
   done
 
   if [ -d "${CCACHE_DIR}" ]; then
