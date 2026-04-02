@@ -2822,15 +2822,23 @@ static int mmcsd_widebus(FAR struct mmcsd_state_s *priv)
     }
 #ifdef CONFIG_MMCSD_MMCSUPPORT
   else if (IS_MMC(priv->type) &&
-           ((priv->buswidth & MMCSD_SCR_BUSWIDTH_4BIT) != 0 &&
-           (priv->caps & SDIO_CAPS_1BIT_ONLY) == 0))
+           (priv->caps & SDIO_CAPS_1BIT_ONLY) == 0)
     {
-      /* SD card supports 4-bit BUS and host settings is not 1-bit only.
-       * Configuring MMC - Use MMC_SWITCH access modes.
+      /* Configuring MMC - Use MMC_SWITCH access modes.
+       * Select 8-bit if host supports it, otherwise 4-bit.
        */
 
-      mmcsd_sendcmdpoll(priv, MMCSD_CMD6,
-                        MMC_CMD6_BUSWIDTH(EXT_CSD_BUS_WIDTH_4));
+      if (priv->caps & SDIO_CAPS_8BIT)
+        {
+          mmcsd_sendcmdpoll(priv, MMCSD_CMD6,
+                            MMC_CMD6_BUSWIDTH(EXT_CSD_BUS_WIDTH_8));
+        }
+      else
+        {
+          mmcsd_sendcmdpoll(priv, MMCSD_CMD6,
+                            MMC_CMD6_BUSWIDTH(EXT_CSD_BUS_WIDTH_4));
+        }
+
       ret = mmcsd_recv_r1(priv, MMCSD_CMD6);
 
       if (ret != OK)
@@ -4080,7 +4088,7 @@ static int mmcsd_cardidentify(FAR struct mmcsd_state_s *priv)
             {
               /* I am a little confused.. I think both SD and MMC cards
                * support CMD55 (but maybe only SD cards support CMD55).
-               * We'll make the the MMC vs. SD decision based on CMD1 and
+               * We'll make the MMC vs. SD decision based on CMD1 and
                * ACMD41.
                */
 
