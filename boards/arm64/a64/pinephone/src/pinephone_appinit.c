@@ -73,3 +73,5 @@ int board_app_initialize(uintptr_t arg)
 }
 
 #endif /* CONFIG_BOARDCTL */
+
+#error Testing: Force a compile error
