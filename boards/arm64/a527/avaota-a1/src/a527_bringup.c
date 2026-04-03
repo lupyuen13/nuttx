@@ -102,6 +102,7 @@ static int mount_ramdisk(void)
 
 int a527_bringup(void)
 {
+  TEST_COMPILE_ERROR;
   int ret;
 
 #ifdef CONFIG_FS_TMPFS
