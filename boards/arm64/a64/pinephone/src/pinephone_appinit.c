@@ -62,6 +62,7 @@
 
 int board_app_initialize(uintptr_t arg)
 {
+  SECOND_SIMULATED_COMPILE_ERROR;
   UNUSED(arg);
 #ifndef CONFIG_BOARD_LATE_INITIALIZE
   /* Perform board initialization */
