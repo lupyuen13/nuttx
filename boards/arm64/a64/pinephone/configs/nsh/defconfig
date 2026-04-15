@@ -5,6 +5,7 @@
 # You can then do "make savedefconfig" to generate a new defconfig file that includes your
 # modifications.
 #
+CONFIG_SECOND_SIMULATED_CONFIG_ERROR=0
 CONFIG_A64_UART=y
 CONFIG_ARCH="arm64"
 CONFIG_ARCH_ARM64=y

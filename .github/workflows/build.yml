@@ -28,6 +28,7 @@ on:
       - "Documentation/**"
     branches:
       - "releases/*"
+      - "*"
     tags:
 
 permissions:
@@ -98,7 +99,7 @@ jobs:
         uses: actions/checkout@v6
         with:
           repository: lupyuen13/nuttx
-          ref: retry-build
+          ref: test-config-error2
           path: sources/nuttx
           fetch-depth: 1
       - name: Checkout nuttx repo tags
